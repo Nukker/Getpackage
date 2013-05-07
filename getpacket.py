@@ -115,11 +115,13 @@ def inputdata(data):
             for (key,value) in mapRet[mapHttpTmp['gs']].items():
                 if key == k:                    #对比
                     result +=  "%s: %s " %(k,v)
-                    if mapRet[mapHttpTmp['gs']][key].has_key(v):
-                        result +="(%s) \t" %mapRet[mapHttpTmp['gs']][key][v]
+                    if type(mapRet[mapHttpTmp['gs']][key]) == dict:         #若mapRet[mapHttpTmp['gs']][key] 的值不再是字典就直接输出了
+                        if mapRet[mapHttpTmp['gs']][key].has_key(v):
+                            result +="(%s) \t" %mapRet[mapHttpTmp['gs']][key][v]
+                        else:
+                            result += '(Undefined)' + '\t'
                     else:
-                        result += '(Undefined)' + '\t'
-
+                        result += "(%s) \t" %mapRet[mapHttpTmp['gs']][key]
     else:
         result += u'未在json文件中定义此类文件'
     return result
